@@ -56,7 +56,7 @@
 				<div class="col-sm-2">
 					<select class="form-control" id="sourceSystem">
 						<option value="JB">JB Source System</option>
-						<option value="SV">Signature Verication System</option>
+						<option value="SV">Signature Verification System</option>
 						
 
 					</select>
