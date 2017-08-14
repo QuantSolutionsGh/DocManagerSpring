@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -48,17 +49,15 @@ public class MainController {
 		this.docMan = docMan;
 	}
 
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = {"/index","/"})
 
 	public String showMain() {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/")
-
-	public String gotoMain() {
-		return "index";
-	}
+	
+	
+	
 
 	@RequestMapping(value = "/viewer", method = RequestMethod.GET)
 	public String showViewer() {
@@ -90,6 +89,30 @@ public class MainController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/getdocs", method = RequestMethod.GET)
+	public ModelAndView getDocs(@RequestParam("docRef") String docRef,
+			@RequestParam("sourceSystem") String sourceSystem,@RequestParam(value="opt",required=false) String opt) {
+		String imageDir = null;
+
+		List<String> al = new ArrayList<String>();
+		
+		if (sourceSystem.contains("JB")) {
+			al = this.docMan.getDocs(docRef);
+			imageDir = "pictures/";
+		} else if (sourceSystem.contains("SV")) {
+			al = this.sigVer.getDocs(docRef);
+			imageDir = "sigver/" + docRef + "/";
+		}
+		
+		ModelAndView modelAndView = new ModelAndView("retrievedDocs");
+		modelAndView.addObject("docList", al);
+		modelAndView.addObject("imageDir",imageDir);
+		modelAndView.addObject("opt",opt);
+
+		return modelAndView;
+	}
+	
 
 	@RequestMapping(value = "/dummy", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
 	@ResponseBody

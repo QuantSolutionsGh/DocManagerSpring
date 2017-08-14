@@ -107,7 +107,7 @@
 										parallelUploads : 10000,
 
 										uploadMultiple : true,
-										dictDefaultMessage : "Kindly drop files here or click to upload",
+										dictDefaultMessage : "Kindly drop files here or click to select files",
 										addRemoveLinks : true,
 										autoProcessQueue : false
 									});
