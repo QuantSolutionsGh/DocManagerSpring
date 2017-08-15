@@ -32,8 +32,9 @@
 	<br />
 	<div class="container">
 
-		<h2>Document Gallery</h2>
-		<p>Click on the images to enlarge them.</p>
+		<c:if test="${not empty docList}">
+		<h2>Document List</h2>
+		
 		<c:forEach var="docVar" items="${docList}">
 
 			<div class="col-md-4">
@@ -51,6 +52,9 @@
 			</div>
 
 		</c:forEach>
+		</c:if>
+		
+		
 
 
 	</div>
