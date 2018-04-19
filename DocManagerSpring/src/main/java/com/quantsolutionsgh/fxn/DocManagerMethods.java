@@ -68,7 +68,12 @@ public class DocManagerMethods extends JdbcDaoSupport implements IDocManagerMeth
 	public void uploadDocument(IUploadedFile doc, String docRef) throws IOException {
 
 		if (doc.getFileName().toUpperCase().contains(".PDF")) {
-			uploadPDF(doc, docRef);
+			uploadPDF(doc, docRef);   //take photos of pdf pages as images
+
+			//uploading original PDF as well here
+
+			uploadPic(doc,docRef);
+
 		} else
 			uploadPic(doc, docRef);
 
@@ -134,7 +139,7 @@ PDDocument document = PDDocument.load(doc.getInputstream());
 			
 			
 			
-			//just a thought we can also upload original image as well
+
 		
 			// suffix in filename will be used as the file format
 		//	String fileName = _file.getFileName() + "-" + (pageCounter++) + ".png";

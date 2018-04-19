@@ -3,6 +3,7 @@ package com.quantsolutionsgh.controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,11 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,12 +61,20 @@ public class MainController {
 		return "viewer";
 	}
 
-	@RequestMapping(value = "/upload")
+	@RequestMapping(value = {"/upload/{_docRef}","/upload/"})
 	@ResponseBody
-	public StringResponse uploadDocs(MultipartHttpServletRequest request, HttpServletResponse response)
+	public StringResponse uploadDocs(@PathVariable Optional<String> _docRef, MultipartHttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		String docRef="";
 
-		String docRef = docMan.getDocRef();
+		if (_docRef.isPresent()){
+			docRef=_docRef.get();
+
+		}else
+			 docRef = docMan.getDocRef();
+
+
+
 
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile mpf = null;
@@ -85,7 +90,14 @@ public class MainController {
 			//Thread.sleep(4000);
 		}
 
-		StringResponse result = new StringResponse("Your document reference # is " + "<h1>"+docRef+"</h1>");
+		StringResponse result;
+
+		if (_docRef.isPresent()){
+			result=new StringResponse("Document list has been updated.");
+
+		} else
+
+		 result = new StringResponse("Your document reference # is " + "<h1>"+docRef+"</h1>");
 
 		return result;
 	}

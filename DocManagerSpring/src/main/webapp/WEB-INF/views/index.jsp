@@ -19,6 +19,26 @@
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="resources/images/favicon.ico" />
+	<style>
+		.dropzone {
+			background: white;
+			border-radius: 5px;
+			border: 2px dashed rgb(0, 135, 247);
+			border-image: none;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		body {
+			height: 100%;
+			color: rgb(100, 108, 127);
+			line-height: 1.4rem;
+			font-family: Roboto, "Open Sans", sans-serif;
+			font-size: 15px;
+			font-weight: 300;
+			text-rendering: optimizeLegibility;
+		}
+	</style>
 
 
 
@@ -52,9 +72,26 @@
 	<div class="container">
 
 
+		<div class="form-group" style="margin-top: 80px">
+
+			<div class=" col-sm-3">
+				<br/>
+				<label class="control-label" for="email">Addon To Existing Documents</label>
+			</div>
+			<div class=" col-sm-3">
+				<input type="text" id="docRef" class="form-control"
+					   placeholder="Enter the document ref here">
+			</div>
+
+
+
+		</div>
+
+
 		<div class="row">
 
 			<div class="col-md-12">
+
 
 
 
@@ -103,7 +140,7 @@
 							var myDropzone = new Dropzone(
 									"#myId",
 									{
-										url : 'upload',
+										url : 'upload/'+$('#docRef').val(),
 										parallelUploads : 10000,
 
 										uploadMultiple : true,
@@ -111,6 +148,16 @@
 										addRemoveLinks : true,
 										autoProcessQueue : false
 									});
+
+							myDropzone.on("processing",function(file){
+
+							    this.options.url='upload/'+$('#docRef').val();
+
+                            });
+
+
+
+
 
 							myDropzone
 									.on(

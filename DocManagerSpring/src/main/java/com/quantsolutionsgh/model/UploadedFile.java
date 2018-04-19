@@ -2,12 +2,17 @@ package com.quantsolutionsgh.model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class UploadedFile implements IUploadedFile {
 	
 	private MultipartFile _mpf;
+
+	private String hackedFileName;
 	
 	public UploadedFile(){
 		
@@ -16,13 +21,24 @@ public class UploadedFile implements IUploadedFile {
 	public UploadedFile(MultipartFile mpf){
 		
 		_mpf=mpf;
+
+
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+		String s = formatter.format(new Date());
+
+
+		hackedFileName = s +"_"+mpf.getOriginalFilename();
+
+
 		
 	}
 
+
+
 	@Override
 	public String getFileName() {
-		// TODO Auto-generated method stub
-		return _mpf.getOriginalFilename();
+		return hackedFileName;
+		//return _mpf.getOriginalFilename();
 	}
 
 	@Override
