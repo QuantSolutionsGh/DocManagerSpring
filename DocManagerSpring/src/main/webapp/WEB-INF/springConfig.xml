@@ -25,6 +25,7 @@
 	
 
 	<!-- mvc:resources mapping="/images/**" location="file:///C:/avadir"/> -->
+	<!-- http://balusc.omnifaces.org/2007/04/imageservlet.html  please read this -->
 	<mvc:resources mapping="/pictures/**"  location="file:${docman.storagePath}/" />
 	<mvc:resources mapping="/sigver/**"  location="file:${docman.sigverPath}/" />
 	<context:property-placeholder location="classpath:docman.properties" />
